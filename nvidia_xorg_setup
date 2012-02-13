@@ -1,0 +1,21 @@
+BIOS: set to optimus (though everyone else says discrete!)
+
+drivers: use activate nvidia proprietary driver
+
+run nvidia-xconfig to replace the xorg.conf file
+
+edit /etc/X11/xorg.conf and add the following to "Device" section
+    BusId "PCI:1:0:0"
+
+Add the following to /etc/modprobe.d/blacklist.conf
+  blacklist vga16fb
+  blacklist nouveau
+  blacklist rivafb
+  blacklist nvidiafb
+  blacklist rivatv
+
+Make the nvidia kernel driver loadable by doing something like:
+sudo ln -s /var/lib/dkms/nvidia-current/2.70.41.06/build/nvidia.ko /lib/modules/2.6.38-8-generic/kernel/drivers/video/nvidia/nvidia.ko
+sudo depmod -aq
+
+reboot
